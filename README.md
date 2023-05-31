@@ -1,6 +1,6 @@
 # Onyx USB-I2C/SPI Converter
 
->Onyx is a I2C bus and SPI bus host adapter which allows to communicate with any I2C or SPI devices via USB. DEICO Onyx is powered directly from the PC’s USB port. DEICO Onyx can be used as master or slave for I2C and SPI. I2C and SPI pins can also be used as GPIO or combined with I2C or SPI functionality. 
+Onyx is a I2C bus and SPI bus host adapter which allows to communicate with any I2C or SPI devices via USB. DEICO Onyx is powered directly from the PC’s USB port. DEICO Onyx can be used as master or slave for I2C and SPI. I2C and SPI pins can also be used as GPIO or combined with I2C or SPI functionality. 
 
 ## Features
 The general features of DEICO Onyx are listed below:
@@ -39,7 +39,7 @@ Areas of application include:
 
 ## Target Bus Connector
 
-![Target Bus Connector] (/Images/Connector.png)
+![Connector](https://github.com/deicogithub/Onyx-USB-I2C-SPI-Converter/blob/main/Images/Connector.png?raw=true)
 
 | Pin | Pin Name       | Description                                                     |
 | :-: | :------------: | :-------------------------------------------------------------- |
