@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace I2CSlave
 {
@@ -47,7 +47,7 @@ namespace I2CSlave
 
                 // Set slave response
                 byte[] slaveResponse = new byte[] {0xAA, 0xBB, 0xCC};
-                var setSlaveResponseLength = myDevice.I2C.SlaveSetResponse(slaveResponse);
+                var status = myDevice.I2C.SlaveSetResponse(slaveResponse, out var setSlaveResponseLength);
 
                 // Create AvailableAsyncData struct
                 AvailableAsyncData availableAsyncData = new AvailableAsyncData();
@@ -61,7 +61,7 @@ namespace I2CSlave
                     while (!availableAsyncData.AnyData())
                     {
                         // Poll data
-                        availableAsyncData = myDevice.AsyncPoll();
+                        status = myDevice.AsyncPoll(out availableAsyncData);
                         Thread.Sleep(100);
                     }
                 });
@@ -78,7 +78,7 @@ namespace I2CSlave
                     if (receivedByteCount > 0)
                     {
                         byte[] slaveRxBytes = new byte[receivedByteCount];
-                        var actualReadByteCount = myDevice.I2C.SlaveRead(45, receivedByteCount, out slaveRxBytes);
+                        status = myDevice.I2C.SlaveRead(45, receivedByteCount, out slaveRxBytes, out var actualReadByteCount);
                         Console.WriteLine($"Slave received {actualReadByteCount} bytes of data");
                         foreach (var rxByte in slaveRxBytes)
                         {
@@ -89,7 +89,7 @@ namespace I2CSlave
                     // Check transimtted data count
                     if (transmittedByteCount > 0)
                     {
-                        var writtenByteCount = myDevice.I2C.SlaveWriteStats();
+                        status = myDevice.I2C.SlaveWriteStats(out var writtenByteCount);
                         Console.WriteLine($"Write stats: {writtenByteCount}");
                     }
                 }

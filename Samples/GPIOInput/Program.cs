@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace GPIOInput
 {
@@ -30,7 +30,7 @@ namespace GPIOInput
                 //var dev = DeviceInformation.GetDeviceAtIndex(0);
 
                 // Find a specific device from the device list. If no device is found return.
-                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000007A");
+                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000026A");
                 if (myDevice is null) return;
 
                 // Open device
@@ -46,7 +46,7 @@ namespace GPIOInput
                 myDevice.GPIO.SetPull((byte)(GPIO_Masks.GPIO_5_SPI_MISO | GPIO_Masks.GPIO_7_SPI_SCK));
 
                 //Get values
-                var valueMask = myDevice.GPIO.Read();
+                var status = myDevice.GPIO.Read(out var valueMask);
 
                 Console.WriteLine($"Output values are set to: {Convert.ToString(valueMask, 2).PadLeft(8, '0')}");
 

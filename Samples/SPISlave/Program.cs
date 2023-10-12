@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace SPISlave
 {
@@ -33,7 +33,7 @@ namespace SPISlave
                 //var dev = DeviceInformation.GetDeviceAtIndex(0);
 
                 // Find a specific device from the device list. If no device is found return.
-                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000007A");
+                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000026A");
                 if (myDevice is null) return;
 
                 // Open device
@@ -47,7 +47,7 @@ namespace SPISlave
 
 
                 // Set slave response
-                var setSlaveResponseLength = myDevice.SPI.SlaveSetResponse(SlaveResponse);
+                var status = myDevice.SPI.SlaveSetResponse(SlaveResponse, out var setSlaveResponseLength);
                 Console.WriteLine($"Slave response length: {setSlaveResponseLength}");
 
                 // Create AvailableAsyncData struct
@@ -64,7 +64,7 @@ namespace SPISlave
                     while (!availableAsyncData.AnyData())
                     {
                         // Poll data
-                        availableAsyncData = myDevice.AsyncPoll();
+                        status = myDevice.AsyncPoll(out availableAsyncData);
                         Thread.Sleep(100);
                     }
                 });
@@ -80,7 +80,7 @@ namespace SPISlave
                     if (receivedByteCount > 0)
                     {
                         byte[] slaveRxBytes = new byte[receivedByteCount];
-                        var actualReadByteCount = myDevice.SPI.SlaveRead(receivedByteCount, out slaveRxBytes);
+                        status = myDevice.SPI.SlaveRead(receivedByteCount, out slaveRxBytes, out var actualReadByteCount);
                         Console.WriteLine($"Slave received {actualReadByteCount} bytes of data");
                         foreach (var rxByte in slaveRxBytes)
                         {

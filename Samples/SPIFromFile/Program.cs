@@ -3,15 +3,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading;
-using OnyxAPI_NET;
 using Microsoft.Win32;
+using onyx_dotnet_api;
 
 namespace SPIFromFile
 {
     class Program
     {
         private static readonly int ChunkSize = 2048;
-        private static readonly string FileName = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\45kbdata.txt");
+        private static readonly string FileName = (Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + @"\data.txt");
         private static readonly SPI_Speed SpiSpeed = SPI_Speed.SPI_Speed_3MHz;
         static void Main(string[] args)
         {
@@ -37,7 +37,7 @@ namespace SPIFromFile
                 //var dev = DeviceInformation.GetDeviceAtIndex(0);
 
                 // Find a specific device from the device list. If no device is found return.
-                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000007A");
+                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000026A");
                 if (myDevice is null) return;
 
                 // Open device
@@ -50,7 +50,7 @@ namespace SPIFromFile
                 myDevice.SPI.SetConfig(SPI_Polarity.POLARITY_RISING_FALLING, SPI_Phase.PHASE_SAMPLE_SETUP);
 
                 // Set SPI bit rate
-                myDevice.SPI.SetSpeed(SpiSpeed);
+                myDevice.SPI.SetSpeed(SpiSpeed, out var actualSetSpeed);
                 Console.WriteLine($"SPI Speed is set to: {SpiSpeed.GetDisplayName()}");
 
 
@@ -92,7 +92,7 @@ namespace SPIFromFile
                         txBytes = tempBytes;
                     }
 
-                    var numberOfBytesWritten = myDevice.SPI.MasterExchange(0, txBytes, out rxBytes, numWrite);
+                    var status = myDevice.SPI.MasterExchange(0, txBytes, out rxBytes, numWrite, out var numberOfBytesWritten);
 
                     if (numberOfBytesWritten < 0)
                     {

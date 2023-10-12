@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace SPIMaster
 {
@@ -30,7 +30,7 @@ namespace SPIMaster
                 //var dev = DeviceInformation.GetDeviceAtIndex(0);
 
                 // Find a specific device from the device list. If no device is found return.
-                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000007A");
+                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000026A");
                 if (myDevice is null) return;
 
                 // Open device
@@ -43,7 +43,7 @@ namespace SPIMaster
                 myDevice.SPI.SetConfig(SPI_Polarity.POLARITY_RISING_FALLING, SPI_Phase.PHASE_SAMPLE_SETUP);
 
                 // Set SPI bit rate to 400 kHz
-                myDevice.SPI.SetSpeed(SPI_Speed.SPI_Speed_1600kHz);
+                myDevice.SPI.SetSpeed(SPI_Speed.SPI_Speed_1600kHz, out var actualSetSpeed);
 
                 // SPI master exchange operation
                 byte[] txBytes = new byte[] { 0xFF, 0xFF, 0xFF };
@@ -52,7 +52,7 @@ namespace SPIMaster
                 // Send exchange command
                 // First parameter of the MasterExchange() method is the slave select pin number.
                 // It is currently not supported, only 1 slave select pin is available.
-                var exchangedByteCount = myDevice.SPI.MasterExchange(0, txBytes, out rxBytes, txBytes.Length);
+                var status = myDevice.SPI.MasterExchange(0, txBytes, out rxBytes, txBytes.Length, out var exchangedByteCount);
                 
                 // Print exchanged byte count
                 Console.WriteLine($"Number of bytes exchanged is: {exchangedByteCount}");

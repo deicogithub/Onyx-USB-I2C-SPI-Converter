@@ -15,11 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GPIOOutput", "GPIOOutput\GP
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GPIOInput", "GPIOInput\GPIOInput.csproj", "{CC4727CD-9F27-4A6C-8AB6-88D71090ACA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LogFeature", "LogFeature\LogFeature.csproj", "{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SPIFromFile", "SPIFromFile\SPIFromFile.csproj", "{807C69B8-BE38-499D-AEFD-216A0DDCC52F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContinousSlaveOperation", "ContinousSlaveOperation\ContinousSlaveOperation.csproj", "{0C9021DB-6E3E-47E4-B6D7-886EBCEAC51E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContinousSlaveOperation", "ContinousSlaveOperation\ContinousSlaveOperation.csproj", "{0C9021DB-6E3E-47E4-B6D7-886EBCEAC51E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,14 +75,6 @@ Global
 		{CC4727CD-9F27-4A6C-8AB6-88D71090ACA1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{CC4727CD-9F27-4A6C-8AB6-88D71090ACA1}.Release|x64.ActiveCfg = Release|x64
 		{CC4727CD-9F27-4A6C-8AB6-88D71090ACA1}.Release|x64.Build.0 = Release|x64
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Debug|x64.ActiveCfg = Debug|x64
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Debug|x64.Build.0 = Debug|x64
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Release|x64.ActiveCfg = Release|x64
-		{AA5BA283-BEC4-4E3E-AE3E-D6463EED79EC}.Release|x64.Build.0 = Release|x64
 		{807C69B8-BE38-499D-AEFD-216A0DDCC52F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{807C69B8-BE38-499D-AEFD-216A0DDCC52F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{807C69B8-BE38-499D-AEFD-216A0DDCC52F}.Debug|x64.ActiveCfg = Debug|Any CPU

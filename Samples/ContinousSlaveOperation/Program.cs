@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace ContinousSlaveOperation
 {
@@ -27,7 +27,7 @@ namespace ContinousSlaveOperation
             try
             {
                 // Find a specific device from the device list. If no device is found return.
-                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000007A");
+                var myDevice = deviceList.FirstOrDefault(x => x.SerialNumber == "DC000026A");
                 if (myDevice is null) return;
 
                 // Open device
@@ -41,7 +41,7 @@ namespace ContinousSlaveOperation
 
                 // Set slave response
                 byte[] slaveResponse = new byte[] { 0xAA, 0xBB, 0xCC };
-                var setSlaveResponseLength = myDevice.SPI.SlaveSetResponse(slaveResponse);
+                var status = myDevice.SPI.SlaveSetResponse(slaveResponse, out var setSlaveResponseLength);
 
                 // Create the background worker for continuous operation. Attach DataReceived event to listen received messages.
                 slaveBackroundWorker = new SlaveBackroundWorker(myDevice);
@@ -54,8 +54,15 @@ namespace ContinousSlaveOperation
                     // Use lock object to prevent race condition
                     lock (SlaveBackroundWorker.lockObject)
                     {
-                        actualReadByteCount = myDevice.SPI.SlaveRead(receivedByteCount, out slaveRxBytes);
+                        status = myDevice.SPI.SlaveRead(receivedByteCount, out slaveRxBytes, out actualReadByteCount);
                     }
+
+                    if (!status.IsSuccess())
+                    {
+                        Console.WriteLine($"Error code: {status}");
+                        return;
+                    }
+
                     Console.WriteLine($"Slave received {actualReadByteCount} bytes of data");
 
                     Console.WriteLine($"Received bytes: ");

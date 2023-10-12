@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace I2CMaster
 {
@@ -40,16 +40,16 @@ namespace I2CMaster
                 myDevice.SetOperationMode(OperationMode.I2C_SPI);
 
                 // Set I2C bit rate to 400 kHz
-                myDevice.I2C.SetBitRate(new I2CBitRate() { BitRate = 400000 });
+                myDevice.I2C.SetBitRate(new BitRate() { Value= 400000 }, out var actualBitRateSet);
 
                 // I2C master write operation
                 byte[] txBytes = new byte[] { 0xFF, 0xFF, 0xFF };
-                var writtenByteCount = myDevice.I2C.MasterWrite(0x15, txBytes);
+                var status = myDevice.I2C.MasterWrite(0x15, txBytes, out var writtenByteCount);
                 Console.WriteLine($"Number of bytes written is: {writtenByteCount}");
 
                 // I2C master read operation
                 byte[] rxBytes = Array.Empty<byte>();
-                var readByteCount = myDevice.I2C.MasterRead(0x15, 3, out rxBytes);
+                status = myDevice.I2C.MasterRead(0x15, 3, out rxBytes, out var readByteCount);
                 Console.WriteLine($"Number of bytes read is: {readByteCount}");
 
                 // Close device

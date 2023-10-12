@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 using System.Threading;
-using OnyxAPI_NET;
+using onyx_dotnet_api;
 
 namespace ContinousSlaveOperation
 {
@@ -48,7 +48,7 @@ namespace ContinousSlaveOperation
                 lock (lockObject)
                 {
                     if (Worker.CancellationPending) break;
-                    _availableData = _device.AsyncPoll();
+                    var status = _device.AsyncPoll(out _availableData);
                     if (_availableData.AnyData())
                     {
                         OnDataReceived(new DataArrivedEventArguments() { DataLength = _availableData.AvailableSPIsReadBytes });
