@@ -40,7 +40,7 @@ namespace I2CMaster
                 myDevice.SetOperationMode(OperationMode.I2C_SPI);
 
                 // Set I2C bit rate to 400 kHz
-                myDevice.I2C.SetBitRate(new BitRate() { Value= 400000 }, out var actualBitRateSet);
+                myDevice.I2C.SetSpeed(I2C_Speed.I2C_Speed_400kHz, out var actualBitRateSet);
 
                 // I2C master write operation
                 byte[] txBytes = new byte[] { 0xFF, 0xFF, 0xFF };
